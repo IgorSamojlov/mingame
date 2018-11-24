@@ -1,59 +1,71 @@
 import sys
 import pygame
-import time 
+import time
 import bull
+import hero
 
 RED = (225, 0, 50)
-BAL = (0, 0, 0)
+BAL = (0, 0, 200)
 
 
 def main():
+
 	millis = int(round(time.time() * 1000))
-
+	clo = pygame.time.Clock()
 	keyd = 0
+	m_keyd = 0
 
-	bul = bull.Bullet (10, 10, 10, 0)
-	nloo = bull.My_nlo (10, 10, 10)
+	a = 0
+
+	myhero = hero.My_hero()
+
+
+	nlo = []
+
+	bullets = []
+
+	for i in range(1, 5):
+		n = bull.My_nlo (i + 20, 2, 2)
+		nlo.append (n)
 
 	pygame.init()
-	screen = pygame.display.set_mode((800, 600))
+	screen = pygame.display.set_mode((1200, 640))
 	pygame.display.set_caption("My game")
 
+
+
 	while True:
-		for event in pygame.event.get ():	
+
+		screen.fill(BAL)
+
+		for event in pygame.event.get ():
 			if event.type == pygame.QUIT:
 				sys.exit()
 
-			elif event.type == pygame.MOUSEMOTION:
-				print (event.pos)
-				print (millis)
-			elif event.type == pygame.MOUSEBUTTONDOWN:
-			
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				m_keyd = 1
+				p =pygame.mouse.get_pos()
+				b = bull.Bullet (1, myhero.x, myhero.y, 0, 'Hero', p[0], p[1])
+				bullets.append(b)
+
+
+			if event.type == pygame.MOUSEBUTTONUP:
+				m_keyd = 0
+
+			if event.type == pygame.KEYDOWN:
 				keyd = 1
-				#print (keyd)
 
-			elif event.type == pygame.MOUSEBUTTONUP:
+			if event.type == pygame.KEYUP:
 				keyd = 0
-				#print (keyd)
-			
-			if keyd == 1:
 
-				if int(round(time.time() * 1000)) > millis:
-					print ((int(round(time.time() * 1000)) - millis))
+		if keyd == 1:
+			kd = pygame.key.get_pressed()
+			myhero.move_hero (kd)
 
-				screen.fill(BAL)
-				pygame.draw.circle(screen, RED, event.pos, 20)
-				bul.draw_bullet (screen)				
+		myhero.draw_hero (screen)
+		if len(bullets) > 0:
+			bullets[0].draw_bullet (screen)
 
-			if int((round(time.time() * 1000)) - millis) > 1000:
-					print ((int(round(time.time() * 1000)) - millis))
-					b = nloo.nlo_shoot()
-					nloo.draw_nlo (screen)
-					b.draw_bullet (screen)
-		
 		pygame.display.update ()
-
-	pygame.disply.flip()
-
 
 main ()
