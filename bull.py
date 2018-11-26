@@ -1,3 +1,5 @@
+#Bullets Class
+
 import pygame
 import time
 
@@ -21,37 +23,12 @@ class Bullet():
 
 	def draw_bullet(self, screen):
 
-		self.move_bullet ()
-
 		pygame.draw.circle(screen, self.color, (self.x, self.y), 20, 10)
+		self.move_bullet ()
 
 	def move_bullet (self):
 		self.x += self.speed
 		self.y = (round(self.y/self.x))*self.x
-
-
-class My_nlo():
-	def __init__ (self, nlo_x, nlo_y, nlo_power):
-		self.speed = 3
-		self.x = nlo_x
-		self.y = nlo_y
-		self.power = nlo_power
-		self.cr_time = int(round(time.time() * 1000))
-
-
-	def draw_nlo (self, scr):
-			pygame.draw.circle(scr, (100, 100, 100), (self.x, self.y), 20, 10)
-
-	def nlo_shoot(self):
-			print ("Shooot")
-			b = Bullet (5, 100, 100, 0, 10, 10, 10)
-			return (b)
-
-	def nlo_get_pos (self):
-		return (self.x, self.y)
-
-	def nlo_move(self, x, y):
-		if ( int(round(time.time())* 1000 - self.cr_time) > 200):
-			self.x =+ self.speed
+		print (self.y)
 
 

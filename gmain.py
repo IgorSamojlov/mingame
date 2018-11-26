@@ -53,12 +53,8 @@ def main():
 
 
 			if event.type == pygame.KEYDOWN:
-				keyd = True
-
-
-		if keyd:
-			kd = pygame.key.get_pressed()
-			myhero.move_hero (kd)
+				kd = pygame.key.get_pressed()
+				myhero.move_hero (kd)
 
 		myhero.draw_hero (screen)
 		if len(bullets) > 0:

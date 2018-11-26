@@ -8,7 +8,7 @@ class My_hero(pygame.sprite.Sprite):
         self.y = 320
         self.speed = 3
 
-        self.image = pygame.image.load('car.png')
+        self.image = pygame.image.load('assets/s_sheep.png')
 
         self.bull_speed = 5
         self.rect = self.image.get_rect(center =(self.x, self.y))
