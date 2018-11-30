@@ -6,7 +6,7 @@ class My_hero(pygame.sprite.Sprite):
 
         self.x = 500
         self.y = 320
-        self.speed = 3
+        self.speed = 5
 
         self.image = pygame.image.load('assets/s_sheep.png')
 
