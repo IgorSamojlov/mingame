@@ -9,6 +9,14 @@ RED = (225, 0, 7)
 BAL = (0, 0, 50)
 clock = pygame.time.Clock()
 
+def bull_dr(bul, scr):
+    if bul:
+            for b in range(0, len(bul)):
+                bul[b].draw_bullet (scr)
+            if not bul[b].life:
+                del bul[b]
+                print ("Kill")
+
 
 def main():
 
@@ -16,14 +24,13 @@ def main():
     clo = pygame.time.Clock()
     keyd = 0
 
-    myhero = hero.My_hero()
+    myhero = hero.My_hero(1200, 640)
 
     nl = []
     bullets = []
 
-    for i in range(1, 5):
-        n = nlo.My_nlo (i + 20, 2, 2)
-        nl.append (n)
+    n = nlo.My_nlo (100, 100, 2)
+    nl.append (n)
 
     pygame.init()
     screen = pygame.display.set_mode((1200, 640))
@@ -40,25 +47,21 @@ def main():
             if event.type == pygame.MOUSEBUTTONDOWN:
                 m_keyd = 1
                 p = pygame.mouse.get_pos()
-                print (p)
-                b = bull.Bullet (1200, 640, 10, myhero.x, myhero.y, 0, 'Hero', p[0], p[1])
 
-                bullets.append(b)
+                myhero.hero_shoot(bullets, p)
 
             if event.type == pygame.MOUSEBUTTONUP:
                 m_keyd = 0
 
-            # if event.type == pygame.KEYDOWN:
-            #     keyd = True
         kd = pygame.key.get_pressed()
         if kd:
             myhero.move_hero(kd)
 
-        myhero.draw_hero(screen)
-        if bullets:
-            for b in range(0, len(bullets)):
-                bullets[b].draw_bullet (screen)
+        myhero.draw_hero(screen, (pygame.mouse.get_pos()))
 
+        bull_dr (bullets, screen)
+        nl[0].draw_nlo (screen, (pygame.mouse.get_pos()))
+        nl[0].nlo_shoot (bullets, (pygame.mouse.get_pos()))
 
         pygame.display.update ()
         clock.tick(60)

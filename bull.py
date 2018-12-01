@@ -2,7 +2,7 @@
 
 import pygame
 import time
-import math
+from math import sqrt
 
 class Bullet():
 
@@ -15,7 +15,7 @@ class Bullet():
 
         self.who = who_is
         self.speed = 0
-        self.put = 3
+        self.put = b_speed
         self.x = 0
         self.y = 0
         self.nx = n_x
@@ -27,7 +27,6 @@ class Bullet():
         self.life = True
 
     def get_koof (self):
-        print(((self.dy - self.ny)/(self.dx - self.nx)))
         return((self.dy - self.ny)/(self.dx - self.nx))
 
     def get_power(self):
@@ -42,7 +41,7 @@ class Bullet():
 
         self.speed += self.put
 
-        self.x = (math.sqrt((self.speed**2)/(1+(self.koof**2))))
+        self.x = (sqrt((self.speed**2)/(1+(self.koof**2))))
 
         self.y = (self.koof*self.x)
 
@@ -51,7 +50,7 @@ class Bullet():
         if (self.nx < self.dx) and (self.ny > self.dy):
             self.y *= -1
         if(self.nx < self.dx) and (self.ny < self.dy):
-            self.y *=-1
+            self.y *= -1
 
         if (round(self.x + self.dx)) > self.w or (round(self.x + self.dx)) < 0:
             self.life = False
