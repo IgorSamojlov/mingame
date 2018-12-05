@@ -4,11 +4,12 @@ import pygame
 import time
 from math import sqrt
 
-class Bullet():
+class Bullet(pygame.sprite.Sprite):
 
-    color = (225, 200, 50)
+
 
     def __init__(self, w, h, b_speed, x_pos, y_pos, b_power, who_is, n_x, n_y):
+        pygame.sprite.Sprite.__init__(self)
 
         self.w = w
         self.h = h
@@ -24,7 +25,10 @@ class Bullet():
         self.dy = y_pos
         self.koof = self.get_koof()
         self.power = b_power
-        self.life = True
+
+        self.image = pygame.image.load('assets/1.png')
+        self.rect = self.image.get_rect(center = (self.x, self.y))
+
 
     def get_koof (self):
         return((self.dy - self.ny)/(self.dx - self.nx))
@@ -32,10 +36,14 @@ class Bullet():
     def get_power(self):
         return self.power
 
-    def draw_bullet(self, screen):
+    def update(self):
         a = self.move_bullet ()
-        pygame.draw.circle(screen, self.color, (a[0], a[1]), 2, 2)
-
+        self.rect.centerx = a[0]
+        self.rect.centery = a[1]
+        if (a[0] <= 0) or (a[0] >= self.w):
+            self.kill()
+        if (a[1] <= 0) or (a[1] >= self.h):
+            self.kill()
 
     def move_bullet (self):
 
@@ -52,9 +60,7 @@ class Bullet():
         if(self.nx < self.dx) and (self.ny < self.dy):
             self.y *= -1
 
-        if (round(self.x + self.dx)) > self.w or (round(self.x + self.dx)) < 0:
-            self.life = False
-        if (round(self.y + self.dy)) > self.h or (round(self.y + self.dy)) < 0:
-            self.life = False
+        return (round(self.x + self.dx), round(self.y + self.dy))
 
+    def get_x_y (self):
         return (round(self.x + self.dx), round(self.y + self.dy))

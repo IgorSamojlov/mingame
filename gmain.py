@@ -4,33 +4,37 @@ import time
 import bull
 import hero
 import nlo
+import explosion
 
 RED = (225, 0, 7)
 BAL = (0, 0, 50)
 clock = pygame.time.Clock()
 
-def bull_dr(bul, scr):
-    if bul:
-            for b in range(0, len(bul)):
-                bul[b].draw_bullet (scr)
-            if not bul[b].life:
-                del bul[b]
-                print ("Kill")
+
+def get_collide(bul_gr, nlo_gr):
+
+    for a in pygame.sprite.groupcollide(nlo_gr, bul_gr, False, False):
+        for b in pygame.sprite.groupcollide(bul_gr, nlo_gr, True, False):
+            a.life -= b.power
+            print (b.power)
+            print ("a.lifi = " + str(a.life))
+
 
 
 def main():
 
-    millis = int(round(time.time() * 1000))
-    clo = pygame.time.Clock()
     keyd = 0
+
+    explo = pygame.sprite.Group()
 
     myhero = hero.My_hero(1200, 640)
 
-    nl = []
-    bullets = []
+    nlo_group = pygame.sprite.Group()
+    m_nlo = nlo.My_nlo (300, 200, 2)
+    nlo_group.add(m_nlo)
 
-    n = nlo.My_nlo (100, 100, 2)
-    nl.append (n)
+    bullets_group = pygame.sprite.Group()
+    bullets_group_nlo = pygame.sprite.Group()
 
     pygame.init()
     screen = pygame.display.set_mode((1200, 640))
@@ -48,7 +52,7 @@ def main():
                 m_keyd = 1
                 p = pygame.mouse.get_pos()
 
-                myhero.hero_shoot(bullets, p)
+                myhero.hero_shoot(bullets_group, p)
 
             if event.type == pygame.MOUSEBUTTONUP:
                 m_keyd = 0
@@ -59,9 +63,20 @@ def main():
 
         myhero.draw_hero(screen, (pygame.mouse.get_pos()))
 
-        bull_dr (bullets, screen)
-        nl[0].draw_nlo (screen, (pygame.mouse.get_pos()))
-        nl[0].nlo_shoot (bullets, (pygame.mouse.get_pos()))
+
+        explo.update()
+        explo.draw(screen)
+
+        nlo_group.update(pygame.mouse.get_pos(), bullets_group_nlo)
+        nlo_group.draw(screen)
+
+        bullets_group.update()
+        bullets_group.draw(screen)
+
+        bullets_group_nlo.update()
+        bullets_group_nlo.draw(screen)
+
+        get_collide(bullets_group, nlo_group)
 
         pygame.display.update ()
         clock.tick(60)

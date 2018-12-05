@@ -38,17 +38,14 @@ class My_hero(pygame.sprite.Sprite):
         scr.blit(new_rec[0], new_rec[1])
 
     def get_x_hero(self):
-        return self.x
+        return (self.x, self.y)
 
-    def get_y_pos(self):
-        return self.y
+    def hero_shoot (self, b_group, pos):
 
-    def hero_shoot (self, bulll, pos):
-
-        b = bull.Bullet (1200, 640,
+        bullet = bull.Bullet (1200, 640,
         self.bull_speed, (self.rect.center[0]), (self.rect.center[1]),
-        0, 'Hero', pos[0], pos[1])
-        bulll.append(b)
+        10, 'Hero', pos[0], pos[1])
+        b_group.add(bullet)
 
     def rotate_hero (self, pos):
 
