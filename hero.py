@@ -3,12 +3,12 @@ import bull
 from math import atan2, degrees
 
 class My_hero(pygame.sprite.Sprite):
-    def __init__(self, width, height):
+    def __init__(self, rectan):
 
-        self.w = width
-        self.h = height
+        self.h_rectan = rectan
         self.x = 500
         self.y = 320
+        self.life = 500
         self.speed = 5
         self.bull_speed = 10
 
@@ -20,16 +20,16 @@ class My_hero(pygame.sprite.Sprite):
 
     def move_hero(self, key):
 
-        if key[pygame.K_a] and (self.x > 0):
+        if key[pygame.K_a] and (self.x > self.h_rectan[0]):
             self.x -= self.speed
 
-        if key[pygame.K_s] and (self.y < self.h):
+        if key[pygame.K_s] and (self.y < self.h_rectan[3]):
             self.y += self.speed
 
-        if key[pygame.K_d] and (self.x < self.w):
+        if key[pygame.K_d] and (self.x < self.h_rectan[2]):
             self.x += self.speed
 
-        if key[pygame.K_w] and (self.y > 0):
+        if key[pygame.K_w] and (self.y > self.h_rectan[1]):
             self.y -= self.speed
 
     def draw_hero(self, scr, pos):
@@ -37,7 +37,7 @@ class My_hero(pygame.sprite.Sprite):
         new_rec = self.rotate_hero(pos)
         scr.blit(new_rec[0], new_rec[1])
 
-    def get_x_hero(self):
+    def get_hero_pos(self):
         return (self.x, self.y)
 
     def hero_shoot (self, b_group, pos):

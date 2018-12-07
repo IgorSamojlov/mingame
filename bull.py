@@ -2,7 +2,7 @@
 
 import pygame
 import time
-from math import sqrt
+from math import sqrt, atan2, degrees
 
 class Bullet(pygame.sprite.Sprite):
 
@@ -26,9 +26,10 @@ class Bullet(pygame.sprite.Sprite):
         self.koof = self.get_koof()
         self.power = b_power
 
-        self.image = pygame.image.load('assets/1.png')
+        self.image = pygame.image.load('assets/rock.png')
         self.rect = self.image.get_rect(center = (self.x, self.y))
 
+        self.rotate_bul()
 
     def get_koof (self):
         return((self.dy - self.ny)/(self.dx - self.nx))
@@ -64,3 +65,14 @@ class Bullet(pygame.sprite.Sprite):
 
     def get_x_y (self):
         return (round(self.x + self.dx), round(self.y + self.dy))
+
+    def rotate_bul(self):
+        x = self.dx - self.nx
+        y = self.dy - self.ny
+
+        a = degrees(atan2((x), (y)))
+        a += 290
+
+        rot_img = pygame.transform.rotate(self.image, a)
+        self.image = rot_img
+        self.rect = rot_img.get_rect(center = (self.x, self.y))
