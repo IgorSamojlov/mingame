@@ -29,7 +29,6 @@ class Expl(pygame.sprite.Sprite):
         self.images.append('assets/12.png')
         self.images.append('assets/13.png')
 
-
         self.image = pygame.image.load(self.images[self.frame])
 
         self.rect = self.image.get_rect(center = (self.x, self.y))

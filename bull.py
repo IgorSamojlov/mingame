@@ -6,15 +6,11 @@ from math import sqrt, atan2, degrees
 
 class Bullet(pygame.sprite.Sprite):
 
-
-
-    def __init__(self, w, h, b_speed, x_pos, y_pos, b_power, who_is, n_x, n_y):
+    def __init__(self, w, h, b_speed, x_pos, y_pos, b_power, n_x, n_y):
         pygame.sprite.Sprite.__init__(self)
 
         self.w = w
         self.h = h
-
-        self.who = who_is
         self.speed = 0
         self.put = b_speed
         self.x = 0
@@ -32,7 +28,10 @@ class Bullet(pygame.sprite.Sprite):
         self.rotate_bul()
 
     def get_koof (self):
-        return((self.dy - self.ny)/(self.dx - self.nx))
+        if (self.dx - self.nx) != 0:
+            return((self.dy - self.ny)/(self.dx - self.nx))
+        else:
+            return(0.0001)
 
     def get_power(self):
         return self.power
@@ -71,7 +70,7 @@ class Bullet(pygame.sprite.Sprite):
         y = self.dy - self.ny
 
         a = degrees(atan2((x), (y)))
-        a += 290
+        a += 180
 
         rot_img = pygame.transform.rotate(self.image, a)
         self.image = rot_img

@@ -8,13 +8,12 @@ class My_hero(pygame.sprite.Sprite):
         self.h_rectan = rectan
         self.x = 500
         self.y = 320
-        self.life = 500
+        self.life = 300
         self.speed = 5
-        self.bull_speed = 10
+        self.bull_speed = 20
 
         self.image = pygame.image.load('assets/s_sheep.png')
         self.rect = self.image.get_rect(center =(self.x, self.y))
-
 
         print ("Cretate Hero")
 
@@ -44,7 +43,7 @@ class My_hero(pygame.sprite.Sprite):
 
         bullet = bull.Bullet (1200, 640,
         self.bull_speed, (self.rect.center[0]), (self.rect.center[1]),
-        10, 'Hero', pos[0], pos[1])
+        30, pos[0], pos[1])
         b_group.add(bullet)
 
     def rotate_hero (self, pos):

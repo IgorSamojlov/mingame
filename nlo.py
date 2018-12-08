@@ -31,7 +31,7 @@ class My_nlo(pygame.sprite.Sprite):
 
             bullet = bull.Bullet (1200, 640,
             10, (self.x), (self.y),
-            self.power, 'Hero', pos[0], pos[1])
+            self.power, pos[0], pos[1])
             b_group.add(bullet)
 
     def nlo_get_pos (self):
@@ -61,10 +61,10 @@ class My_nlo(pygame.sprite.Sprite):
 
 
     def get_koof (self, pos):
-        if (abs((self.y - pos[1])/(self.x - pos[0])) != 0):
+        if (abs((self.y - pos[1])) != 0):
             return(abs((self.y - pos[1])/(self.x - pos[0])))
         else:
-            return
+            return(0.0001)
 
     def update(self, pos, b_gr, e_group):
         self.nlo_move(pos)
